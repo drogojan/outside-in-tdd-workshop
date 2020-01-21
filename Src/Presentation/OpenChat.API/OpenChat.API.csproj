@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\OpenChat.Common\OpenChat.Common.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OpenChat.Infrastructure\OpenChat.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OpenChat.Persistance\OpenChat.Persistance.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
