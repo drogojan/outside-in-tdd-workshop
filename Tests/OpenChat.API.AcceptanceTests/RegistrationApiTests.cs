@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace OpenChat.API.AcceptanceTests
 {
-    public class RegistrationApiTests : IClassFixture<WebApplicationFactory<OpenChat.API.Startup>>
+    public class RegistrationApiTests : IClassFixture<AcceptanceTestFixture>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly AcceptanceTestFixture testFixture;
+        private readonly HttpClient client;
 
-        public RegistrationApiTests(WebApplicationFactory<OpenChat.API.Startup> factory)
+        public RegistrationApiTests(AcceptanceTestFixture testFixture, ITestOutputHelper testOutputHelper)
         {
-            _factory = factory;
+            this.testFixture = testFixture;
+            this.testFixture.TestOutputHelper = testOutputHelper;
+            this.client = this.testFixture.CreateClient();
         }
 
         [Fact]
         public async Task Register_a_new_user()
         {
-            var client = _factory.CreateClient();
-
             var user = new {
                 username = "Alice",
                 password = "alice123",
