@@ -238,8 +238,10 @@ definitions:
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       username:
         type: string
+        maxLength: 30
       about:
         type: string
+        maxLength: 100
 
   NewPost:
     type: object

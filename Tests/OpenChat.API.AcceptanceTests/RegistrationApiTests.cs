@@ -39,7 +39,7 @@ namespace OpenChat.API.AcceptanceTests
             var actual = await response.Content.ReadAsJsonAsync<JObject>();
 
             response.StatusCode.Should().Be(HttpStatusCode.Created);
-            actual.Value<int>("id").Should().BePositive();
+            actual.Value<Guid>("id").Should().NotBeEmpty();
             actual.Value<string>("username").Should().Be(user.username);
             actual.Value<string>("about").Should().Be(user.about);
         }
