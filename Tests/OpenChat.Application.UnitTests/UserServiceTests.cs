@@ -37,5 +37,18 @@ namespace OpenChat.Application.UnitTests
             createdUser.Username.Should().Be(USERNAME);
             createdUser.About.Should().Be(ABOUT);
         }
+
+        [Fact]
+        public void Throws_UsernameAlreadyInUseException_when_creating_an_user_with_an_existing_username()
+        {
+            IUserRepository userRepositoryStub = Mock.Of<IUserRepository>(m => m.IsUsernameTaken(USERNAME) == true);
+            IGuidGenerator guidGeneratorStub = Mock.Of<IGuidGenerator>(g => g.Next() == USER_ID);
+
+            var sut = new UserService(guidGeneratorStub, userRepositoryStub);
+
+            Action action = () => sut.CreateUser(REGISTRATION_DATA);
+
+            action.Should().Throw<UsernameAlreadyInUseException>();
+        }
     }
 }

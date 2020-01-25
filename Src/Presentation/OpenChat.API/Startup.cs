@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenChat.Application.Users;
+using OpenChat.Common;
+using OpenChat.Infrastructure;
 
 namespace OpenChat.API
 {
@@ -29,6 +31,8 @@ namespace OpenChat.API
             services.AddControllers();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGuidGenerator, GuidGenerator>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

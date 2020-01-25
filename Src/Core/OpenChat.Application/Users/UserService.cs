@@ -15,6 +15,9 @@ namespace OpenChat.Application.Users
         }
         public UserApiModel CreateUser(UserInputModel registrationData)
         {
+            if(userRepository.IsUsernameTaken(registrationData.Username))
+                throw new UsernameAlreadyInUseException();
+
             User user = new User
             {
                 Id = guidGenerator.Next(),
