@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\OpenChat.Common\OpenChat.Common.csproj" />
     <ProjectReference Include="..\..\Infrastructure\OpenChat.Infrastructure\OpenChat.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\OpenChat.Persistance\OpenChat.Persistance.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\OpenChat.Persistence\OpenChat.Persistence.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
