@@ -1,7 +1,7 @@
 using OpenChat.Application.Users;
 using OpenChat.Domain.Entities;
 
-namespace OpenChat.API
+namespace OpenChat.Persistance
 {
     public class UserRepository : IUserRepository
     {

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using OpenChat.Application.Users;
 using OpenChat.Common;
 using OpenChat.Infrastructure;
+using OpenChat.Persistance;
 
 namespace OpenChat.API
 {
