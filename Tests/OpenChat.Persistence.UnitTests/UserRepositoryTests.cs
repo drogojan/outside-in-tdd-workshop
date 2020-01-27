@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 using OpenChat.Domain.Entities;
-using OpenChat.Persistance;
+using OpenChat.Persistence;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 

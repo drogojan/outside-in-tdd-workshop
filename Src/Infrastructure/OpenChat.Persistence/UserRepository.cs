@@ -1,9 +1,8 @@
 using System.Linq;
 using OpenChat.Application.Users;
 using OpenChat.Domain.Entities;
-using OpenChat.Persistence;
 
-namespace OpenChat.Persistance
+namespace OpenChat.Persistence
 {
     public class UserRepository : IUserRepository
     {
