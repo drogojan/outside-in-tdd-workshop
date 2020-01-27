@@ -39,7 +39,7 @@ namespace OpenChat.Application.UnitTests
         }
 
         [Fact]
-        public void Throws_UsernameAlreadyInUseException_when_creating_an_user_with_an_existing_username()
+        public void Throws_UsernameAlreadyInUseException_when_creating_a_user_with_an_existing_username()
         {
             IUserRepository userRepositoryStub = Mock.Of<IUserRepository>(m => m.IsUsernameTaken(USERNAME) == true);
             IGuidGenerator guidGeneratorStub = Mock.Of<IGuidGenerator>(g => g.Next() == USER_ID);

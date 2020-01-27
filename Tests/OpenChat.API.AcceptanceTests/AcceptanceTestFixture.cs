@@ -18,7 +18,7 @@ namespace OpenChat.API.AcceptanceTests
             var hostBuilder = base.CreateHostBuilder();
             hostBuilder.ConfigureLogging(logging =>
             {
-                logging.ClearProviders();
+                // logging.ClearProviders();
                 logging.AddXUnit(TestOutputHelper);
             });
 

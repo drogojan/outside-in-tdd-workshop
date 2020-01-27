@@ -29,7 +29,7 @@ namespace OpenChat.API.AcceptanceTests
         public async Task Register_a_new_user()
         {
             var user = new {
-                username = "Alice",
+                username = "Alicess",
                 password = "alice123",
                 about = "I like to travel."
             };
@@ -39,7 +39,7 @@ namespace OpenChat.API.AcceptanceTests
             var actual = await response.Content.ReadAsJsonAsync<JObject>();
 
             response.StatusCode.Should().Be(HttpStatusCode.Created);
-            actual.Value<Guid>("id").Should().NotBeEmpty();
+            Guid.Parse(actual.Value<string>("id")).Should().NotBeEmpty();
             actual.Value<string>("username").Should().Be(user.username);
             actual.Value<string>("about").Should().Be(user.about);
         }

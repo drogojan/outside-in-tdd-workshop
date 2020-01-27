@@ -7,7 +7,7 @@ namespace OpenChat.Infrastructure
     {
         public Guid Next()
         {
-            throw new NotImplementedException();
+            return Guid.NewGuid();
         }
     }
 }
