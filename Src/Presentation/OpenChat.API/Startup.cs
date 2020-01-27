@@ -37,7 +37,7 @@ namespace OpenChat.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<OpenChatDbContext>(options => {
                 options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDB;Trusted_Connection=True;");
-                // options.EnableSensitiveDataLogging();
+                options.EnableSensitiveDataLogging();
             });
         }
 

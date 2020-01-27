@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,12 +18,12 @@ namespace OpenChat.API
         {
             IHost host = CreateHostBuilder(args).Build();
 
-            // // migrate the database.  Best practice = in Main, using service scope
-            // using (var scope = host.Services.CreateScope())
-            // {
-            //     var dbContext = scope.ServiceProvider.GetService<OpenChatDbContext>();
-            //     dbContext.Database.EnsureCreated();
-            // }
+            // migrate the database.  Best practice = in Main, using service scope
+            using (var scope = host.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<OpenChatDbContext>();
+                dbContext.Database.Migrate();
+            }
 
             host.Run();
         }

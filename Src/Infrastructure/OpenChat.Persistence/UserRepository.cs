@@ -11,7 +11,6 @@ namespace OpenChat.Persistence
         public UserRepository(OpenChatDbContext dbContext)
         {
             this.dbContext = dbContext;
-            dbContext.Database.EnsureCreated();
         }
 
         public void Add(User user)

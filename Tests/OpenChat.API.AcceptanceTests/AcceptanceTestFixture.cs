@@ -1,10 +1,13 @@
 ﻿using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenChat.Persistence;
 using Xunit.Abstractions;
 
 namespace OpenChat.API.AcceptanceTests
@@ -34,12 +37,35 @@ namespace OpenChat.API.AcceptanceTests
 
             builder.ConfigureServices(services =>
             {
-                var buildServiceProvider = services.BuildServiceProvider();
+                // Remove the app's OpenChatDbContext registration.
+                var descriptor = services.SingleOrDefault(
+                    d => d.ServiceType ==
+                        typeof(DbContextOptions<OpenChatDbContext>));
 
-                using (var scope = buildServiceProvider.CreateScope())
+                if (descriptor != null)
                 {
-                    // var scopeServiceProvider = scope.ServiceProvider;
-                    // var myService = scopeServiceProvider.GetRequiredService<MyService>();
+                    services.Remove(descriptor);
+                }
+
+                // Add DB for acceptance tests
+                services.AddDbContext<OpenChatDbContext>(options =>
+                {
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
+                });
+
+                // Build the service provider.
+                var sp = services.BuildServiceProvider();
+
+                // Create a scope to obtain a reference to the database
+                // context (OpenChatDbContext).
+                using (var scope = sp.CreateScope())
+                {
+                    var scopedServices = scope.ServiceProvider;
+                    var db = scopedServices.GetRequiredService<OpenChatDbContext>();
+
+                    // Ensure the database is created.
+                    db.Database.EnsureDeleted();
+                    db.Database.Migrate();
                 }
             });
         }
