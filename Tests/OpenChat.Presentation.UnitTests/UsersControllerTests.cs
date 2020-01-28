@@ -24,7 +24,7 @@ namespace OpenChat.Presentation.UnitTests
             var sut = new UsersController(userServiceMock.Object);
             sut.Create(REGISTRATION_DATA);
 
-            userServiceMock.Verify(m => m.CreateUser(REGISTRATION_DATA));
+            userServiceMock.Verify(m => m.CreateUser(REGISTRATION_DATA), Times.Once);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace OpenChat.Presentation.UnitTests
         }
 
         [Fact]
-        public void Return_BadRequest_when_creating_a_user_with_an_existing_username()
+        public void Return_an_error_when_creating_a_user_with_an_existing_username()
         {
             Mock<IUserService> userServiceStub = new Mock<IUserService>();
             userServiceStub.Setup(m => m.CreateUser(REGISTRATION_DATA)).Throws<UsernameAlreadyInUseException>();
@@ -59,7 +59,10 @@ namespace OpenChat.Presentation.UnitTests
             var actionResult = sut.Create(REGISTRATION_DATA);
             var badRequestResult = actionResult as BadRequestObjectResult;
 
+            badRequestResult.Should().NotBeNull();
+
             var apiError = badRequestResult.Value as ApiError;
+            apiError.Should().NotBeNull();
             apiError.Message.Should().Be("Username already in use");
         }
     }

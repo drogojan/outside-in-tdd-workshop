@@ -64,7 +64,7 @@ namespace OpenChat.API.AcceptanceTests
                     var db = scopedServices.GetRequiredService<OpenChatDbContext>();
 
                     // Ensure the database is created.
-                    // db.Database.EnsureDeleted();
+                    db.Database.EnsureDeleted();
                     db.Database.Migrate();
                 }
             });

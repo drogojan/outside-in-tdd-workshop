@@ -6,7 +6,6 @@ namespace OpenChat.Application.Users
     {
         public UsernameAlreadyInUseException() : base("Username already in use")
         {
-            
         }
     }
 }

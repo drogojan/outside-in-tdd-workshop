@@ -11,7 +11,7 @@ using Exception = System.Exception;
 
 namespace OpenChat.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {

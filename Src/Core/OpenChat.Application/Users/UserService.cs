@@ -35,5 +35,10 @@ namespace OpenChat.Application.Users
                 About = user.About
             };
         }
+
+        public LoggedInUser Login(UserCredentials userCredentials)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
