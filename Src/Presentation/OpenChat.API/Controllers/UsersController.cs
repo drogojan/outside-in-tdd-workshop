@@ -23,7 +23,7 @@ namespace OpenChat.API.Controllers
         }
     
         [HttpPost]
-        public IActionResult Create(UserInputModel registrationData)
+        public IActionResult Create(RegistrationInputModel registrationData)
         {
             try
             {

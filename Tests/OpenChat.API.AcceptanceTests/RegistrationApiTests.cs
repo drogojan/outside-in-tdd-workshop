@@ -29,7 +29,7 @@ namespace OpenChat.API.AcceptanceTests
         public async Task Register_a_new_user()
         {
             var user = new {
-                username = "Alicess",
+                username = "Alice",
                 password = "alice123",
                 about = "I like to travel."
             };

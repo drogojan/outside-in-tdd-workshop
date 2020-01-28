@@ -14,7 +14,7 @@ namespace OpenChat.Application.UnitTests
         private const string USERNAME = "Alice";
         private const string PASSWORD = "alice123";
         private const string ABOUT = "Something about Alice";
-        private readonly UserInputModel REGISTRATION_DATA = new UserInputModel { Username = USERNAME, Password = PASSWORD, About = ABOUT };
+        private readonly RegistrationInputModel REGISTRATION_DATA = new RegistrationInputModel { Username = USERNAME, Password = PASSWORD, About = ABOUT };
 
         [Fact]
         public void Create_a_user()
