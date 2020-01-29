@@ -16,23 +16,23 @@ namespace OpenChat.Presentation.UnitTests
         private readonly LoggedInUser LOGGED_IN_USER = new LoggedInUser { Id = USER_ID, Username = "Alice", About = "About Alice" };
 
         [Fact]
-        public void Logs_in_a_user()
+        public void Log_in_a_user()
         {
-            Mock<IUserService> userServiceMock = new Mock<IUserService>();
+            Mock<ILoginService> loginServiceMock = new Mock<ILoginService>();
 
-            var sut = new LoginController(userServiceMock.Object);
+            var sut = new LoginController(loginServiceMock.Object);
             sut.Post(USER_CREDENTIALS);
 
-            userServiceMock.Verify(m => m.Login(USER_CREDENTIALS), Times.Once);
+            loginServiceMock.Verify(m => m.Login(USER_CREDENTIALS), Times.Once);
         }
 
         [Fact]
         public void Returns_the_logged_in_user()
         {
-            Mock<IUserService> userServiceMock = new Mock<IUserService>();
-            userServiceMock.Setup(m => m.Login(USER_CREDENTIALS)).Returns(LOGGED_IN_USER);
+            Mock<ILoginService> loginServiceStub = new Mock<ILoginService>();
+            loginServiceStub.Setup(m => m.Login(USER_CREDENTIALS)).Returns(LOGGED_IN_USER);
 
-            var sut = new LoginController(userServiceMock.Object);
+            var sut = new LoginController(loginServiceStub.Object);
 
             OkObjectResult result = sut.Post(USER_CREDENTIALS) as OkObjectResult;
             result.Should().NotBeNull();
@@ -48,10 +48,10 @@ namespace OpenChat.Presentation.UnitTests
         [Fact]
         public void Return_an_error_when_credentials_are_invalid()
         {
-            Mock<IUserService> userServiceMock = new Mock<IUserService>();
-            userServiceMock.Setup(m => m.Login(USER_CREDENTIALS)).Throws<InvalidCredentialsException>();
+            Mock<ILoginService> loginServiceMock = new Mock<ILoginService>();
+            loginServiceMock.Setup(m => m.Login(USER_CREDENTIALS)).Throws<InvalidCredentialsException>();
 
-            var sut = new LoginController(userServiceMock.Object);
+            var sut = new LoginController(loginServiceMock.Object);
             IActionResult actionResult = sut.Post(USER_CREDENTIALS);
             NotFoundObjectResult notFoundResult = actionResult as NotFoundObjectResult;
 

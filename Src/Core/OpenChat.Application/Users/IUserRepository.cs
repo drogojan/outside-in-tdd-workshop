@@ -6,5 +6,6 @@ namespace OpenChat.Application.Users
     {
         void Add(User user);
         bool IsUsernameTaken(string username);
+        LoggedInUser UserFor(UserCredentials userCredentials);
     }
 }

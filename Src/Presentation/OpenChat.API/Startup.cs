@@ -33,6 +33,7 @@ namespace OpenChat.API
             services.AddControllers();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IGuidGenerator, GuidGenerator>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<OpenChatDbContext>(options => {

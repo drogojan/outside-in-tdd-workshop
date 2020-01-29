@@ -50,23 +50,26 @@ namespace OpenChat.API.AcceptanceTests
                 // Add DB for acceptance tests
                 services.AddDbContext<OpenChatDbContext>(options =>
                 {
-                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
+                    options.UseInMemoryDatabase("OpenChatTestDB");
+                    // options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
                 });
 
-                // Build the service provider.
-                var sp = services.BuildServiceProvider();
+                // Uncomment next block when switching to SqlServer provider
 
-                // Create a scope to obtain a reference to the database
-                // context (OpenChatDbContext).
-                using (var scope = sp.CreateScope())
-                {
-                    var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<OpenChatDbContext>();
+                // // Build the service provider.
+                // var sp = services.BuildServiceProvider();
 
-                    // Ensure the database is created.
-                    db.Database.EnsureDeleted();
-                    db.Database.Migrate();
-                }
+                // // Create a scope to obtain a reference to the database
+                // // context (OpenChatDbContext).
+                // using (var scope = sp.CreateScope())
+                // {
+                //     var scopedServices = scope.ServiceProvider;
+                //     var db = scopedServices.GetRequiredService<OpenChatDbContext>();
+
+                //     // Ensure the database is created.
+                //     db.Database.EnsureDeleted();
+                //     db.Database.Migrate();
+                // }
             });
         }
     }

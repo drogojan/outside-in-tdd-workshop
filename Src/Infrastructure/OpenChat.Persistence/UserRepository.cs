@@ -23,5 +23,10 @@ namespace OpenChat.Persistence
         {
             return dbContext.Users.Any(u => u.Username == username);
         }
+
+        public void UserFor(UserCredentials userCredentials)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

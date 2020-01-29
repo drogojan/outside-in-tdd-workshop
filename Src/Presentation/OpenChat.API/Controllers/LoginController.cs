@@ -12,18 +12,18 @@ namespace OpenChat.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private IUserService _userService;
+        private ILoginService _loginService;
 
-        public LoginController(IUserService userService)
+        public LoginController(ILoginService loginService)
         {
-            _userService = userService;
+            this._loginService = loginService;
         }
 
         [HttpPost]
         public IActionResult Post(UserCredentials userCredentials)
         {
             try {
-                LoggedInUser loggedInUser = _userService.Login(userCredentials);
+                LoggedInUser loggedInUser = _loginService.Login(userCredentials);
                 return base.Ok(loggedInUser);
             } catch (InvalidCredentialsException e) {
                 return new NotFoundObjectResult(new ApiError { Message = e.Message });
