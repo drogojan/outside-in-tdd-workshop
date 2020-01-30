@@ -1,3 +1,5 @@
+using OpenChat.Domain.Entities;
+
 namespace OpenChat.Application.Users
 {
     public class LoginService : ILoginService
@@ -9,9 +11,14 @@ namespace OpenChat.Application.Users
             this.userRepository = userRepository;
         }
 
-        public LoggedInUser Login(UserCredentials userCredentials)
+        public UserApiModel Login(UserCredentials userCredentials)
         {
-            return userRepository.UserFor(userCredentials);
+            User user = userRepository.UserFor(userCredentials) ?? throw new InvalidCredentialsException();
+            return new UserApiModel {
+                Id = user.Id,
+                Username = user.Username,
+                About = user.About
+            };
         }
     }
 }

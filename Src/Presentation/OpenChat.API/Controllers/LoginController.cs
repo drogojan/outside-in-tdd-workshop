@@ -23,7 +23,7 @@ namespace OpenChat.API.Controllers
         public IActionResult Post(UserCredentials userCredentials)
         {
             try {
-                LoggedInUser loggedInUser = _loginService.Login(userCredentials);
+                UserApiModel loggedInUser = _loginService.Login(userCredentials);
                 return base.Ok(loggedInUser);
             } catch (InvalidCredentialsException e) {
                 return new NotFoundObjectResult(new ApiError { Message = e.Message });

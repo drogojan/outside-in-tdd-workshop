@@ -14,7 +14,7 @@ namespace OpenChat.Presentation.UnitTests
     {
         private static readonly Guid USER_ID = Guid.Parse("04cec3f7-87fa-49b2-80a5-a08f0c7e02e7");
         private static readonly RegistrationInputModel REGISTRATION_DATA = new RegistrationInputModel { Username = "Alice", Password = "alice123", About = "Something about Alice" };
-        private static readonly RegisteredUserApiModel USER = new RegisteredUserApiModel { Id = USER_ID, Username = "Alice", About = "Something about Alice" };
+        private static readonly UserApiModel USER = new UserApiModel { Id = USER_ID, Username = "Alice", About = "Something about Alice" };
 
         [Fact]
         public void Create_a_new_user()
@@ -40,7 +40,7 @@ namespace OpenChat.Presentation.UnitTests
             var createdResult = actionResult as CreatedResult;
             createdResult.Should().NotBeNull();
 
-            var createdUser = createdResult.Value as RegisteredUserApiModel;
+            var createdUser = createdResult.Value as UserApiModel;
             createdUser.Should().NotBeNull();
 
             createdUser.Id.Should().Be(USER.Id);

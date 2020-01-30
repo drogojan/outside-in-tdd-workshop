@@ -13,7 +13,7 @@ namespace OpenChat.Application.Users
             this.guidGenerator = guidGenerator;
             this.userRepository = userRepository;
         }
-        public RegisteredUserApiModel CreateUser(RegistrationInputModel registrationData)
+        public UserApiModel CreateUser(RegistrationInputModel registrationData)
         {
             if(userRepository.IsUsernameTaken(registrationData.Username))
                 throw new UsernameAlreadyInUseException();
@@ -28,7 +28,7 @@ namespace OpenChat.Application.Users
 
             this.userRepository.Add(user);
 
-            return new RegisteredUserApiModel
+            return new UserApiModel
             {
                 Id = user.Id,
                 Username = user.Username,
@@ -36,7 +36,7 @@ namespace OpenChat.Application.Users
             };
         }
 
-        public LoggedInUser Login(UserCredentials userCredentials)
+        public UserApiModel Login(UserCredentials userCredentials)
         {
             throw new System.NotImplementedException();
         }

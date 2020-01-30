@@ -48,7 +48,7 @@ namespace OpenChat.Application.UnitTests
 
             Action action = () => sut.CreateUser(REGISTRATION_DATA);
 
-            action.Should().Throw<UsernameAlreadyInUseException>();
+            action.Should().Throw<UsernameAlreadyInUseException>().WithMessage("Username already in use");
         }
     }
 }

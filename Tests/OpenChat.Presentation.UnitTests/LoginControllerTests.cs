@@ -13,7 +13,7 @@ namespace OpenChat.Presentation.UnitTests
     {
         private static readonly Guid USER_ID = Guid.Parse("04cec3f7-87fa-49b2-80a5-a08f0c7e02e7");
         private readonly UserCredentials USER_CREDENTIALS = new UserCredentials { Username = "Alice", Password = "alice123" };
-        private readonly LoggedInUser LOGGED_IN_USER = new LoggedInUser { Id = USER_ID, Username = "Alice", About = "About Alice" };
+        private readonly UserApiModel LOGGED_IN_USER = new UserApiModel { Id = USER_ID, Username = "Alice", About = "About Alice" };
 
         [Fact]
         public void Log_in_a_user()
@@ -37,12 +37,12 @@ namespace OpenChat.Presentation.UnitTests
             OkObjectResult result = sut.Post(USER_CREDENTIALS) as OkObjectResult;
             result.Should().NotBeNull();
 
-            LoggedInUser actualLoggedInUser = result.Value as LoggedInUser;
-            actualLoggedInUser.Should().NotBeNull();
+            UserApiModel actualUserApiModel = result.Value as UserApiModel;
+            actualUserApiModel.Should().NotBeNull();
 
-            actualLoggedInUser.Id.Should().Be(LOGGED_IN_USER.Id);
-            actualLoggedInUser.Username.Should().Be(LOGGED_IN_USER.Username);
-            actualLoggedInUser.About.Should().Be(LOGGED_IN_USER.About);
+            actualUserApiModel.Id.Should().Be(LOGGED_IN_USER.Id);
+            actualUserApiModel.Username.Should().Be(LOGGED_IN_USER.Username);
+            actualUserApiModel.About.Should().Be(LOGGED_IN_USER.About);
         }
 
         [Fact]
