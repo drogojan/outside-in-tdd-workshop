@@ -36,8 +36,8 @@ namespace OpenChat.API.AcceptanceTests
             var registeredUser = await registeredUserResponse.Content.ReadAsJsonAsync<JObject>();
 
             var userCredentials = new {
-                username = registeredUser.Value<string>("username"),
-                password = registeredUser.Value<string>("password")
+                username = user.username,
+                password = user.password
             };
 
             var loginResponse = await client.PostAsJsonAsync("api/login", userCredentials);

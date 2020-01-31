@@ -11,7 +11,7 @@ namespace OpenChat.Application.UnitTests
     {
         private static readonly Guid USER_ID = Guid.Parse("04cec3f7-87fa-49b2-80a5-a08f0c7e02e7");
         private readonly UserCredentials USER_CREDENTIALS = new UserCredentials { Username = "Alice", Password = "alice123" };
-        private readonly User USER = new User { Id = USER_ID, Username = "Alice", About = "About Alice" };
+        private readonly User USER = new User { Id = USER_ID, Username = "Alice", Password = "alice123", About = "About Alice" };
 
         [Fact]
         public void Return_the_logged_in_user()
@@ -23,9 +23,7 @@ namespace OpenChat.Application.UnitTests
 
             var actualLoggedInUser = sut.Login(USER_CREDENTIALS);
 
-            actualLoggedInUser.Id.Should().Be(USER.Id);
-            actualLoggedInUser.Username.Should().Be(USER.Username);
-            actualLoggedInUser.About.Should().Be(USER.About);
+            USER.Should().BeEquivalentTo(actualLoggedInUser);
         }
 
         [Fact]

@@ -26,7 +26,10 @@ namespace OpenChat.Persistence
 
         public User UserFor(UserCredentials userCredentials)
         {
-            throw new System.NotImplementedException();
+            return dbContext.Users.SingleOrDefault(u =>
+                    u.Username == userCredentials.Username
+                    && u.Password == userCredentials.Password
+                );
         }
     }
 }

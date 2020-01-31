@@ -29,9 +29,9 @@ namespace OpenChat.API.AcceptanceTests
         public async Task Register_a_new_user()
         {
             var user = new {
-                username = "Alice",
-                password = "alice123",
-                about = "I like to travel."
+                Username = "Alice",
+                Password = "alice123",
+                About = "I like to travel."
             };
 
             var response = await client.PostAsJsonAsync("api/users", user);
@@ -40,8 +40,8 @@ namespace OpenChat.API.AcceptanceTests
 
             response.StatusCode.Should().Be(HttpStatusCode.Created);
             Guid.Parse(actual.Value<string>("id")).Should().NotBeEmpty();
-            actual.Value<string>("username").Should().Be(user.username);
-            actual.Value<string>("about").Should().Be(user.about);
+            actual.Value<string>("username").Should().Be(user.Username);
+            actual.Value<string>("about").Should().Be(user.About);
         }
     }
 }

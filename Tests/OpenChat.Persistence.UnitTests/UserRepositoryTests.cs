@@ -46,8 +46,8 @@ namespace OpenChat.Persistence.UnitTests
             var charlie = sut.UserFor(CHARLIE_CREDENTIALS);
             var unknown = sut.UserFor(UNKNOWN_CREDENTIALS);
 
-            ALICE.Should().BeEquivalentTo(alice, options => options.ExcludingMissingMembers());
-            CHARLIE.Should().BeEquivalentTo(charlie, options=> options.ExcludingMissingMembers());
+            alice.Should().BeEquivalentTo(ALICE);
+            charlie.Should().BeEquivalentTo(CHARLIE);
             unknown.Should().BeNull();
         }
 
@@ -56,7 +56,7 @@ namespace OpenChat.Persistence.UnitTests
             DbContextOptionsBuilder<OpenChatDbContext> dbContextOptionsBuilder =
                 new DbContextOptionsBuilder<OpenChatDbContext>();
 
-            dbContextOptionsBuilder.UseInMemoryDatabase("OpenChat-InMemory-DB");
+            dbContextOptionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
 
             return new OpenChatDbContext(dbContextOptionsBuilder.Options);
         }
