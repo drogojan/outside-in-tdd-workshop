@@ -31,12 +31,14 @@ namespace OpenChat.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IGuidGenerator, GuidGenerator>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddDbContext<OpenChatDbContext>(options => {
+            services.AddDbContext<OpenChatDbContext>(options =>
+            {
                 options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDB;Trusted_Connection=True;");
                 options.EnableSensitiveDataLogging();
             });
@@ -51,6 +53,8 @@ namespace OpenChat.API
             }
 
             app.UseRouting();
+
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyOrigin().WithMethods("GET", "POST"));
 
             app.UseAuthorization();
 
