@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenChat.Application.Common;
+using OpenChat.Application.Posts;
 using OpenChat.Application.Users;
 using Exception = System.Exception;
 
@@ -16,12 +17,12 @@ namespace OpenChat.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-    
+
         public UsersController(IUserService userService)
         {
             _userService = userService;
         }
-    
+
         [HttpPost]
         public IActionResult Create(RegistrationInputModel registrationData)
         {
@@ -34,6 +35,13 @@ namespace OpenChat.API.Controllers
             {
                 return new BadRequestObjectResult(new ApiError { Message = e.Message });
             }
+        }
+
+        [HttpPost]
+        [Route("{userId}/timeline")]
+        public IActionResult CreatePost(NewPost post)
+        {
+            throw new NotImplementedException();
         }
     }
 }
