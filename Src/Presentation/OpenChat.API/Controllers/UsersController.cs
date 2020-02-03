@@ -31,17 +31,10 @@ namespace OpenChat.API.Controllers
                 var createdUser = _userService.CreateUser(registrationData);
                 return new CreatedResult("", createdUser);
             }
-            catch (UsernameAlreadyInUseException e)
+            catch (InappropriateLanguageException e)
             {
                 return new BadRequestObjectResult(new ApiError { Message = e.Message });
             }
-        }
-
-        [HttpPost]
-        [Route("{userId}/timeline")]
-        public IActionResult CreatePost(NewPost post)
-        {
-            throw new NotImplementedException();
         }
     }
 }

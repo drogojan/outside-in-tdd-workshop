@@ -5,6 +5,7 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using OpenChat.API.Controllers;
 using OpenChat.Application.Common;
+using OpenChat.Application.Posts;
 using OpenChat.Application.Users;
 using Xunit;
 
