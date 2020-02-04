@@ -13,7 +13,8 @@ namespace OpenChat.Presentation.UnitTests
     {
         private static readonly Guid USER_ID = Guid.Parse("04cec3f7-87fa-49b2-80a5-a08f0c7e02e7");
         private static readonly Guid POST_ID = Guid.Parse("86822512-9a65-44cd-b59b-37dafdb34c1d");
-        private static readonly DateTime DATE_TIME = new DateTime(2020, 2, 25, 9, 30, 0);
+        // private static readonly DateTime DATE_TIME = new DateTime(2020, 2, 25, 9, 30, 0);
+        private static readonly string DATE_TIME = "2020-02-25T09:30:15Z"; //new DateTime(2020, 2, 25, 9, 30, 15);
         private static readonly string POST_TEXT = "Feeling good today!";
         private readonly NewPost NEW_POST = new NewPost { Text = POST_TEXT };
         private readonly PostApiModel POST = new PostApiModel { UserId = USER_ID, PostId = POST_ID, Text = POST_TEXT, DateTime = DATE_TIME };

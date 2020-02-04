@@ -7,6 +7,6 @@ namespace OpenChat.Application.Posts
         public Guid UserId { get; set; }
         public Guid PostId { get; set; }
         public string Text { get; set; }
-        public DateTime DateTime { get; set; }
+        public string DateTime { get; set; }
     }
 }

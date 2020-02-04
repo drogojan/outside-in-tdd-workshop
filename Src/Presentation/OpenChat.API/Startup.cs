@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenChat.Application.Posts;
 using OpenChat.Application.Users;
 using OpenChat.Common;
 using OpenChat.Infrastructure;
@@ -37,6 +38,10 @@ namespace OpenChat.API
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IGuidGenerator, GuidGenerator>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IDateTime, MachineDateTime>();
+            services.AddScoped<IPostRepository, PostRepository>();
             services.AddDbContext<OpenChatDbContext>(options =>
             {
                 options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDB;Trusted_Connection=True;");
