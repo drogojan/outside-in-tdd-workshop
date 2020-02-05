@@ -7,9 +7,16 @@ namespace OpenChat.Application.UnitTests
     public class LanguageServiceTests
     {
         [Theory]
-        [InlineData("orange", true)]
+        [InlineData("", false)]
+        [InlineData("text", false)]
         [InlineData("ice cream", true)]
-        [InlineData("good", false)]
+        [InlineData("orange", true)]
+        [InlineData("elephant", true)]
+        [InlineData("Ice cream", true)]
+        [InlineData("Ice CrEaM", true)]
+        [InlineData("ELEPHANT", true)]
+        [InlineData("oranGE", true)]
+        [InlineData("orange ice cream for an elephant", true)]
         public void Informs_when_the_text_contains_inappropriate_language(string text, bool expected)
         {
             var sut = new LanguageService();

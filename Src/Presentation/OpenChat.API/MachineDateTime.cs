@@ -5,6 +5,6 @@ namespace OpenChat.Infrastructure
 {
     public class MachineDateTime : IDateTime
     {
-        public DateTime Now => throw new NotImplementedException();
+        public DateTime Now => DateTime.Now;
     }
 }
