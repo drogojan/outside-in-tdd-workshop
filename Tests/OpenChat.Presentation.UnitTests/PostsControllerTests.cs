@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -13,11 +14,11 @@ namespace OpenChat.Presentation.UnitTests
     {
         private static readonly Guid USER_ID = Guid.Parse("04cec3f7-87fa-49b2-80a5-a08f0c7e02e7");
         private static readonly Guid POST_ID = Guid.Parse("86822512-9a65-44cd-b59b-37dafdb34c1d");
-        // private static readonly DateTime DATE_TIME = new DateTime(2020, 2, 25, 9, 30, 0);
-        private static readonly string DATE_TIME = "2020-02-25T09:30:15Z"; //new DateTime(2020, 2, 25, 9, 30, 15);
+        private static readonly string DATE_TIME = "2020-02-25T09:30:15Z";
         private static readonly string POST_TEXT = "Feeling good today!";
         private readonly NewPost NEW_POST = new NewPost { Text = POST_TEXT };
-        private readonly PostApiModel POST = new PostApiModel { UserId = USER_ID, PostId = POST_ID, Text = POST_TEXT, DateTime = DATE_TIME };
+        private static readonly PostApiModel POST = new PostApiModel { UserId = USER_ID, PostId = POST_ID, Text = POST_TEXT, DateTime = DATE_TIME };
+        private readonly IEnumerable<PostApiModel> POSTS = new List<PostApiModel> { POST };
 
         [Fact]
         public void Create_a_post()
@@ -38,7 +39,7 @@ namespace OpenChat.Presentation.UnitTests
 
             var sut = new PostsController(postServiceStub.Object);
             var actionResult = sut.Create(USER_ID, NEW_POST);
-            
+
             var createdResult = actionResult as CreatedResult;
             createdResult.Should().NotBeNull();
 
@@ -66,6 +67,21 @@ namespace OpenChat.Presentation.UnitTests
             var apiError = badRequestResult.Value as ApiError;
             apiError.Should().NotBeNull();
             apiError.Message.Should().Be("Post contains inappropriate language");
+        }
+
+        [Fact]
+        public void Return_the_posts_for_a_given_user()
+        {
+            Mock<IPostService> postServiceStub = new Mock<IPostService>();
+            postServiceStub.Setup(m => m.PostsBy(USER_ID)).Returns(POSTS);
+
+            var sut = new PostsController(postServiceStub.Object);
+            var actionResult = sut.PostsBy(USER_ID);
+
+            actionResult.Should().BeOfType<ActionResult<IEnumerable<PostApiModel>>>();
+            var postByUser = actionResult.Value;
+
+            postByUser.Should().BeEquivalentTo(POSTS);
         }
     }
 }

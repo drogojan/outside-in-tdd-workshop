@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Moq;
 using OpenChat.Application.Posts;
@@ -56,6 +58,27 @@ namespace OpenChat.Application.UnitTests
             Action action = () => sut.CreatePost(USER_ID, POST_TEXT);
 
             action.Should().Throw<InappropriateLanguageException>().WithMessage("Post contains inappropriate language");
+        }
+
+        [Fact]
+        public void Return_the_posts_for_a_given_user()
+        {
+            ILanguageService languageServiceStub = Mock.Of<ILanguageService>(m => m.IsInappropriate(POST_TEXT) == false);
+            IGuidGenerator guidGeneratorDummy = Mock.Of<IGuidGenerator>();
+            IDateTime dateTimeDummy = Mock.Of<IDateTime>();
+
+            IEnumerable<Post> POSTS = new List<Post> { new Post { Id = POST_ID, UserId = USER_ID, Text = POST_TEXT, DateTime = DATE_TIME } };
+            IPostRepository postRepositoryStub = Mock.Of<IPostRepository>(m => m.PostsBy(USER_ID) == POSTS);
+
+            var sut = new PostService(languageServiceStub, guidGeneratorDummy, dateTimeDummy, postRepositoryStub);
+            var postsByUser = sut.PostsBy(USER_ID);
+
+            postsByUser.Should().HaveCount(1);
+            var post = postsByUser.Single();
+            post.PostId.Should().Be(POST_ID);
+            post.UserId.Should().Be(USER_ID);
+            post.Text.Should().Be(POST_TEXT);
+            post.DateTime.Should().Be(FORMATTED_DATE_TIME);
         }
     }
 }

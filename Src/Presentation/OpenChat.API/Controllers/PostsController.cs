@@ -19,13 +19,20 @@ namespace OpenChat.API.Controllers
             this.postService = postService;
         }
 
+        [HttpPost]
         public IActionResult Create(Guid userId, NewPost post)
         {
             try {
                 return new CreatedResult("", this.postService.CreatePost(userId, post.Text));
             } catch (InappropriateLanguageException ex) {
-                return new BadRequestObjectResult(new ApiError { Message = ex.Message  });
+                return new BadRequestObjectResult(new ApiError { Message = ex.Message });
             }
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<PostApiModel>> PostsBy(Guid userId)
+        {
+            return new List<PostApiModel>(this.postService.PostsBy(userId));
         }
     }
 }

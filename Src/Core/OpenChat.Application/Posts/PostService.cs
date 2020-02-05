@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using OpenChat.Common;
 using OpenChat.Domain.Entities;
 
@@ -11,7 +13,6 @@ namespace OpenChat.Application.Posts
         private readonly IDateTime dateTime;
         private readonly IPostRepository postRepository;
 
-
         public PostService(ILanguageService languageService, IGuidGenerator guidGenerator, IDateTime dateTime, IPostRepository postRepository)
         {
             this.languageService = languageService;
@@ -22,11 +23,13 @@ namespace OpenChat.Application.Posts
 
         public PostApiModel CreatePost(Guid userId, string postText)
         {
-            if(languageService.IsInappropriate(postText)) {
+            if (languageService.IsInappropriate(postText))
+            {
                 throw new InappropriateLanguageException();
             }
 
-            Post post = new Post {
+            Post post = new Post
+            {
                 Id = guidGenerator.Next(),
                 UserId = userId,
                 Text = postText,
@@ -34,13 +37,27 @@ namespace OpenChat.Application.Posts
             };
 
             postRepository.Add(post);
+            
+            return ToPostApiModel(post);
+        }
 
-            return new PostApiModel {
+        public IEnumerable<PostApiModel> PostsBy(Guid userId)
+        {
+            return postRepository.PostsBy(userId).Select(post => 
+                ToPostApiModel(post)
+            );
+        }
+
+        private static PostApiModel ToPostApiModel(Post post)
+        {
+            return new PostApiModel
+            {
                 PostId = post.Id,
                 UserId = post.UserId,
                 Text = post.Text,
                 DateTime = post.DateTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'")
             };
         }
+
     }
 }

@@ -61,9 +61,9 @@ namespace OpenChat.API.AcceptanceTests
         {
             var user = new
             {
-                username = "John",
-                password = "john123",
-                about = "I like to say hello"
+                username = "Bob",
+                password = "BOB123",
+                about = "I like to say howdy"
             };
 
             var registeredUserResponse = await client.PostAsJsonAsync("api/users", user);
@@ -74,11 +74,12 @@ namespace OpenChat.API.AcceptanceTests
 
             var firstPost = new
             {
-                text = "Hello World! This is John."
+                text = "Hello World! This is Bob."
             };
 
-            var secondPost = new {
-                text = "Hey there! It's me again."
+            var secondPost = new
+            {
+                text = "Hey there! It's me again. Bob. B.O.B."
             };
 
             var createfirstPostReponse = await client.PostAsJsonAsync($"api/users/{userId}/timeline", firstPost);
