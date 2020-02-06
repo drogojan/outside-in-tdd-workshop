@@ -40,7 +40,7 @@ namespace OpenChat.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ILanguageService, LanguageService>();
-            services.AddScoped<IDateTime, MachineDateTime>();
+            services.AddScoped<IDateTime, UtcDateTime>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddDbContext<OpenChatDbContext>(options =>
             {

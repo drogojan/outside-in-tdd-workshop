@@ -94,7 +94,7 @@ namespace OpenChat.API.AcceptanceTests
             var secondPostReponseResponse = await client.PostAsJsonAsync($"api/users/{userId}/timeline", secondPost);
             secondPostReponseResponse.StatusCode.Should().Be(HttpStatusCode.Created);
 
-            var secondCreatedPost = await createfirstPostReponse.Content.ReadAsJsonAsync<JObject>();
+            var secondCreatedPost = await secondPostReponseResponse.Content.ReadAsJsonAsync<JObject>();
             Guid.Parse(secondCreatedPost.Value<string>("postId")).Should().NotBeEmpty();
             secondCreatedPost.Value<string>("userId").Should().Be(userId);
             secondCreatedPost.Value<string>("text").Should().Be(secondPost.text);

@@ -23,7 +23,7 @@ namespace OpenChat.Application.UnitTests
         {
             ILanguageService languageServiceStub = Mock.Of<ILanguageService>(m => m.IsInappropriate(POST_TEXT) == false);
             IGuidGenerator guidGeneratorStub = Mock.Of<IGuidGenerator>(g => g.Next() == POST_ID);
-            var dateTimeStub = Mock.Of<IDateTime>(m => m.Now == DATE_TIME);
+            var dateTimeStub = Mock.Of<IDateTime>(m => m.UtcNow == DATE_TIME);
             Mock<IPostRepository> postRepositoryMock = new Mock<IPostRepository>();
 
             var sut = new PostService(languageServiceStub, guidGeneratorStub, dateTimeStub, postRepositoryMock.Object);

@@ -33,7 +33,7 @@ namespace OpenChat.Application.Posts
                 Id = guidGenerator.Next(),
                 UserId = userId,
                 Text = postText,
-                DateTime = dateTime.Now
+                DateTime = dateTime.UtcNow
             };
 
             postRepository.Add(post);
