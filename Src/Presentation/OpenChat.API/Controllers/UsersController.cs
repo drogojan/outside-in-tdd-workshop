@@ -36,5 +36,11 @@ namespace OpenChat.API.Controllers
                 return new BadRequestObjectResult(new ApiError { Message = e.Message });
             }
         }
+
+        [HttpGet]
+        public IEnumerable<UserApiModel> GetAll()
+        {
+            return _userService.AllUsers();
+        }
     }
 }

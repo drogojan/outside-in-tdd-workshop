@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OpenChat.Application.Users;
 using OpenChat.Common;
 using OpenChat.Domain.Entities;
@@ -13,6 +14,12 @@ namespace OpenChat.Application.Users
             this.guidGenerator = guidGenerator;
             this.userRepository = userRepository;
         }
+
+        public IEnumerable<UserApiModel> AllUsers()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public UserApiModel CreateUser(RegistrationInputModel registrationData)
         {
             if(userRepository.IsUsernameTaken(registrationData.Username))

@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Src\Core\OpenChat.Domain\OpenChat.Domain.csproj" />
+    <ProjectReference Include="..\..\Src\Core\OpenChat.Application\OpenChat.Application.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

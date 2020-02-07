@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -7,6 +8,7 @@ using OpenChat.API.Controllers;
 using OpenChat.Application.Common;
 using OpenChat.Application.Posts;
 using OpenChat.Application.Users;
+using static OpenChat.Test.Infrastructure.Builders.UserApiModelBuilder;
 using Xunit;
 
 namespace OpenChat.Presentation.UnitTests
@@ -65,6 +67,22 @@ namespace OpenChat.Presentation.UnitTests
             var apiError = badRequestResult.Value as ApiError;
             apiError.Should().NotBeNull();
             apiError.Message.Should().Be("Username already in use");
+        }
+
+        [Fact]
+        public void Return_all_users()
+        {
+            UserApiModel CHARLIE = AUserApiModel().WithUsername("CHARLIE").Build();
+            UserApiModel ALICE = AUserApiModel().WithUsername("ALICE").Build();
+            UserApiModel BOB = AUserApiModel().WithUsername("BOB").Build();
+            IEnumerable<UserApiModel> USERS = new List<UserApiModel> { CHARLIE, ALICE, BOB };
+            IUserService userServiceStub = Mock.Of<IUserService>(m => m.AllUsers() == USERS);
+
+            var sut = new UsersController(userServiceStub);
+
+            var allUsers = sut.GetAll();
+
+            allUsers.Should().BeEquivalentTo(new List<UserApiModel> { CHARLIE, ALICE, BOB });
         }
     }
 }
