@@ -28,9 +28,9 @@ namespace OpenChat.API.AcceptanceTests
         [Fact]
         public async Task Return_all_users()
         {
-            var CHARLIE = AUser().WithUsername("Charlie1").Build();
-            var ALICE = AUser().WithUsername("Alice1").Build();
-            var BOB = AUser().WithUsername("Bob1").Build();
+            var CHARLIE = AUser().WithUsername("Charlie").Build();
+            var ALICE = AUser().WithUsername("Alice").Build();
+            var BOB = AUser().WithUsername("Bob").Build();
 
             var charlie = await RegisterUser(CHARLIE);
             var alice = await RegisterUser(ALICE);

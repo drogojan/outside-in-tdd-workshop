@@ -47,14 +47,27 @@ namespace OpenChat.API.AcceptanceTests
                     services.Remove(descriptor);
                 }
 
-                // Add DB for acceptance tests
+                // Create a new service provider.
+                var serviceProvider = 
+                    new ServiceCollection()
+                        .AddEntityFrameworkInMemoryDatabase()
+                        .BuildServiceProvider();
+
+                // Add a database context (OpenChatDbContext) using an in-memory database for testing.
                 services.AddDbContext<OpenChatDbContext>(options =>
                 {
-                    options.UseInMemoryDatabase("OpenChatTestDB");
-                    // options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
+                    options.UseInMemoryDatabase("OpenChatInMemoryDb");
+                    options.UseInternalServiceProvider(serviceProvider);
                 });
 
                 // Uncomment next block when switching to SqlServer provider
+                // set "parallelizeTestCollections": false in xunit.runner.json
+
+                // // Add DB for acceptance tests
+                // services.AddDbContext<OpenChatDbContext>(options =>
+                // {
+                //     options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
+                // });
 
                 // // Build the service provider.
                 // var sp = services.BuildServiceProvider();
@@ -71,43 +84,6 @@ namespace OpenChat.API.AcceptanceTests
                 //     db.Database.Migrate();
                 // }
             });
-
-            // builder.ConfigureServices(services =>
-            // {
-            //     // Create a new service provider.
-            //     var serviceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
-
-            //     // Add a database context (AppDbContext) using an in-memory database for testing.
-            //     services.AddDbContext<OpenChatDbContext>(options =>
-            //     {
-            //         options.UseInMemoryDatabase("InMemoryAppDb");
-            //         options.UseInternalServiceProvider(serviceProvider);
-            //     });
-
-            //     // Build the service provider.
-            //     var sp = services.BuildServiceProvider();
-
-            //     // Create a scope to obtain a reference to the database contexts
-            //     using (var scope = sp.CreateScope())
-            //     {
-            //         var scopedServices = scope.ServiceProvider;
-            //         var appDb = scopedServices.GetRequiredService<OpenChatDbContext>();
-
-            //         // var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-            //         // Ensure the database is created.
-            //         appDb.Database.EnsureCreated();
-
-            //         // try
-            //         // {
-            //         //     // Seed the database with some specific test data.
-            //         //     SeedData.PopulateTestData(appDb);
-            //         // }
-            //         // catch (Exception ex)
-            //         // {
-            //         //     logger.LogError(ex, "An error occurred seeding the " + "database with test messages. Error: {ex.Message}");
-            //         // }
-            //     }
-            // });
         }
     }
 }
