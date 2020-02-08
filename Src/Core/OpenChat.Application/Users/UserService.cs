@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using OpenChat.Application.Users;
 using OpenChat.Common;
 using OpenChat.Domain.Entities;
@@ -17,12 +18,20 @@ namespace OpenChat.Application.Users
 
         public IEnumerable<UserApiModel> AllUsers()
         {
-            throw new System.NotImplementedException();
+            var allUsers = userRepository.AllUsers();
+            return allUsers.Select(u =>
+                new UserApiModel
+                {
+                    Id = u.Id,
+                    Username = u.Username,
+                    About = u.About
+                }
+            );
         }
 
         public UserApiModel CreateUser(RegistrationInputModel registrationData)
         {
-            if(userRepository.IsUsernameTaken(registrationData.Username))
+            if (userRepository.IsUsernameTaken(registrationData.Username))
                 throw new UsernameAlreadyInUseException();
 
             User user = new User
@@ -41,11 +50,6 @@ namespace OpenChat.Application.Users
                 Username = user.Username,
                 About = user.About
             };
-        }
-
-        public UserApiModel Login(UserCredentials userCredentials)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

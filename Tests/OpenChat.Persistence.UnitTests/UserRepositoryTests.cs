@@ -5,6 +5,8 @@ using OpenChat.Persistence;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using OpenChat.Application.Users;
+using static OpenChat.Test.Infrastructure.Builders.UserBuilder;
+using System.Collections.Generic;
 
 namespace OpenChat.Persistence.UnitTests
 {
@@ -49,6 +51,22 @@ namespace OpenChat.Persistence.UnitTests
             alice.Should().BeEquivalentTo(ALICE);
             charlie.Should().BeEquivalentTo(CHARLIE);
             unknown.Should().BeNull();
+        }
+
+        [Fact]
+        public void Returns_all_the_users()
+        {
+            OpenChatDbContext dbContext = CreateInMemoryDbContext();
+            UserRepository sut = new UserRepository(dbContext);
+
+            User MARY = AUser().WithUsername("Mary").Build();
+            User MARK = AUser().WithUsername("MarK").Build();
+            sut.Add(MARY);
+            sut.Add(MARK);
+
+            var allUsers = sut.AllUsers();
+
+            allUsers.Should().Contain(new List<User> { MARY, MARK });
         }
 
         private OpenChatDbContext CreateInMemoryDbContext()

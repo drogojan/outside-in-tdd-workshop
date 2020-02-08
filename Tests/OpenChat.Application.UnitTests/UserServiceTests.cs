@@ -5,6 +5,8 @@ using OpenChat.Application.Users;
 using OpenChat.Common;
 using FluentAssertions;
 using OpenChat.Domain.Entities;
+using System.Collections.Generic;
+using static OpenChat.Test.Infrastructure.Builders.UserBuilder;
 
 namespace OpenChat.Application.UnitTests
 {
@@ -49,6 +51,23 @@ namespace OpenChat.Application.UnitTests
             Action action = () => sut.CreateUser(REGISTRATION_DATA);
 
             action.Should().Throw<UsernameAlreadyInUseException>().WithMessage("Username already in use");
+        }
+
+        [Fact]
+        public void Returns_all_the_users()
+        {
+            User ALICE = AUser().WithUsername("Alice").Build();
+            User JOHN = AUser().WithUsername("John").Build();
+            User MARIE = AUser().WithUsername("Marie").Build();
+            IEnumerable<User> USERS = new List<User> { ALICE, JOHN, MARIE };
+            IUserRepository userRepositoryStub = Mock.Of<IUserRepository>(m => m.AllUsers() == USERS);
+            IGuidGenerator guidGeneratorDummy = Mock.Of<IGuidGenerator>();
+
+            var sut = new UserService(guidGeneratorDummy, userRepositoryStub);
+
+            IEnumerable<UserApiModel> allUsers = sut.AllUsers();
+
+            USERS.Should().BeEquivalentTo(allUsers);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using OpenChat.Application.Users;
 using OpenChat.Domain.Entities;
@@ -17,6 +18,11 @@ namespace OpenChat.Persistence
         {
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
+        }
+
+        public IEnumerable<User> AllUsers()
+        {
+            return dbContext.Users.ToList();
         }
 
         public bool IsUsernameTaken(string username)
