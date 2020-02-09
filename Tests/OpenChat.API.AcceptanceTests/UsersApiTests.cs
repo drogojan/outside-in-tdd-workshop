@@ -13,16 +13,11 @@ using System.Collections.Generic;
 
 namespace OpenChat.API.AcceptanceTests
 {
-    public class UsersApiTests : IClassFixture<AcceptanceTestFixture>
+    public class UsersApiTests : ApiTests
     {
-        private readonly AcceptanceTestFixture testFixture;
-        private readonly HttpClient client;
-
         public UsersApiTests(AcceptanceTestFixture testFixture, ITestOutputHelper testOutputHelper)
+            : base(testFixture, testOutputHelper)
         {
-            this.testFixture = testFixture;
-            this.testFixture.TestOutputHelper = testOutputHelper;
-            this.client = this.testFixture.CreateClient();
         }
 
         [Fact]
@@ -49,20 +44,6 @@ namespace OpenChat.API.AcceptanceTests
             var allUsers = await response.Content.ReadAsJsonAsync<IEnumerable<RegisteredUser>>();
 
             return allUsers;
-        }
-
-        private async Task<RegisteredUser> RegisterUser(User user)
-        {
-            var response = await client.PostAsJsonAsync("api/users", user);
-            var registeredUser = await response.Content.ReadAsJsonAsync<RegisteredUser>();
-
-            response.StatusCode.Should().Be(HttpStatusCode.Created);
-
-            registeredUser.Should().BeEquivalentTo(user, options =>
-                options.Excluding(p => p.Password));
-            registeredUser.Id.Should().NotBeEmpty();
-
-            return registeredUser;
         }
     }
 }
