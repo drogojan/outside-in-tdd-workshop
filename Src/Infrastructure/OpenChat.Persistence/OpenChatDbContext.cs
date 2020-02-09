@@ -12,6 +12,7 @@ namespace OpenChat.Persistence
 
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<UserFollowing> UserFollowings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OpenChatDbContext).Assembly);

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using OpenChat.Application.Common;
 using OpenChat.Application.Followings;
 
 namespace OpenChat.API.Controllers
@@ -17,8 +18,12 @@ namespace OpenChat.API.Controllers
 
         public IActionResult Create(FollowingInputModel following)
         {
-            followingService.CreateFollowing(following);
-            return new EmptyResult();
+            try {
+                followingService.CreateFollowing(following);
+                return new CreatedResult("", null);
+            } catch (FollowingAlreadyExistsException ex) {
+                return new BadRequestObjectResult(new ApiError { Message = ex.Message });
+            }
         }
     }
 }
