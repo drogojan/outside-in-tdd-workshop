@@ -19,6 +19,21 @@ namespace OpenChat.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("OpenChat.Domain.Entities.Following", b =>
+                {
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FolloweeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FollowerId", "FolloweeId");
+
+                    b.HasIndex("FolloweeId");
+
+                    b.ToTable("Followings");
+                });
+
             modelBuilder.Entity("OpenChat.Domain.Entities.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -68,12 +83,27 @@ namespace OpenChat.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("OpenChat.Domain.Entities.Following", b =>
+                {
+                    b.HasOne("OpenChat.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("FolloweeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OpenChat.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OpenChat.Domain.Entities.Post", b =>
                 {
-                    b.HasOne("OpenChat.Domain.Entities.User", "User")
-                        .WithMany("Posts")
+                    b.HasOne("OpenChat.Domain.Entities.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

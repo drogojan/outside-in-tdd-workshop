@@ -15,7 +15,7 @@ namespace OpenChat.Persistence
 
         public void Add(Following following)
         {
-            dbContext.UserFollowings.Add(new UserFollowing {
+            dbContext.Followings.Add(new Following {
                 FollowerId = following.FollowerId,
                 FolloweeId = following.FolloweeId
             });
@@ -24,7 +24,7 @@ namespace OpenChat.Persistence
 
         public bool IsFollowingRegistered(Following following)
         {
-            return dbContext.UserFollowings.Any(uf =>
+            return dbContext.Followings.Any(uf =>
                 uf.FollowerId == following.FollowerId
                 && uf.FolloweeId == following.FolloweeId
             );

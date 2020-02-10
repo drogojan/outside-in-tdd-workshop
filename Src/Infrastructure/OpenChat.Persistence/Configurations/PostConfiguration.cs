@@ -15,7 +15,11 @@ namespace OpenChat.Persistence.Configurations
                 .HasMaxLength(300);
             builder.Property(p => p.DateTime)
                 .IsRequired();
-            builder.HasOne(p => p.User);
+            builder
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -18,8 +18,6 @@ namespace OpenChat.Persistence.Configurations
 
             builder.Property(p => p.About)
                 .HasMaxLength(100);
-
-            builder.HasMany(p => p.Posts);
         }
     }
 }
