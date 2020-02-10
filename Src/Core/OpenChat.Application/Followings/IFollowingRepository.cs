@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using OpenChat.Domain.Entities;
 
 namespace OpenChat.Application.Followings
@@ -7,5 +8,6 @@ namespace OpenChat.Application.Followings
     {
         void Add(Following following);
         bool IsFollowingRegistered(Following following);
+        IEnumerable<User> UsersFollowedBy(Guid guid);
     }
 }

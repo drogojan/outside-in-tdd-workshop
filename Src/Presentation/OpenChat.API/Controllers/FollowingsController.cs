@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using OpenChat.Application.Common;
 using OpenChat.Application.Followings;
+using OpenChat.Application.Users;
 
 namespace OpenChat.API.Controllers
 {
@@ -24,6 +26,12 @@ namespace OpenChat.API.Controllers
             } catch (FollowingAlreadyExistsException ex) {
                 return new BadRequestObjectResult(new ApiError { Message = ex.Message });
             }
+        }
+
+        [Route("{userId}/followees")]
+        public IEnumerable<UserApiModel> GetFollowees(Guid userId)
+        {
+            return followingService.UsersFollowedBy(userId);
         }
     }
 }

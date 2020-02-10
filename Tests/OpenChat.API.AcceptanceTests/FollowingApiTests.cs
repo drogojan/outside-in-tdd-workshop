@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using FluentAssertions;
+using OpenChat.API.AcceptanceTests.Models;
+using OpenChat.Application.Users;
 using Xunit;
 using Xunit.Abstractions;
 using static OpenChat.API.AcceptanceTests.Builders.UserBuilder;
@@ -26,9 +29,36 @@ namespace OpenChat.API.AcceptanceTests
             var charlie = await RegisterUser(CHARLIE);
             var alice = await RegisterUser(ALICE);
 
-            var following = new {
-                followerId = charlie.Id,
-                followeeId = alice.Id
+            await RegisterFollowing(charlie, alice);
+        }
+
+        [Fact]
+        public async Task Return_the_users_followed_by_a_user()
+        {
+            var BOB = AUser().WithUsername("Bob").Build();
+            var MARIE = AUser().WithUsername("Marie").Build();
+            var JOHN = AUser().WithUsername("John").Build();
+
+            var bob = await RegisterUser(BOB);
+            var marie = await RegisterUser(MARIE);
+            var john = await RegisterUser(JOHN);
+
+            await RegisterFollowing(bob, marie);
+            await RegisterFollowing(bob, john);
+
+            var followeesResponse = await client.GetAsync($"api/followings/{bob.Id}/followees");
+            followeesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var followees = await followeesResponse.Content.ReadAsJsonAsync<IEnumerable<UserApiModel>>();
+            followees.Should().BeEquivalentTo(new [] { marie, john });
+        }
+
+        private async Task RegisterFollowing(RegisteredUser follower, RegisteredUser followee)
+        {
+            var following = new
+            {
+                followerId = follower.Id,
+                followeeId = followee.Id
             };
 
             var createFollowingResponse = await client.PostAsJsonAsync("api/followings", following);

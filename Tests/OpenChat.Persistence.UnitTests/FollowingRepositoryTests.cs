@@ -32,6 +32,31 @@ namespace OpenChat.Persistence.UnitTests
             sut.IsFollowingRegistered(CHARLIE_FOLLOWING_ALICE).Should().BeTrue();
         }
 
+        [Fact]
+        public void Return_the_users_followed_by_a_user()
+        {
+            var CHARLIE = AUser().WithUsername("CHARLIE").Build();
+            var ALICE = AUser().WithUsername("ALICE").Build();
+            var JOHN = AUser().WithUsername("JOHN").Build();
+            Following CHARLIE_FOLLOWING_ALICE = AFollowing().WithFollowerId(CHARLIE.Id).WithFolloweeId(ALICE.Id).Build();
+            Following CHARLIE_FOLLOWING_JOHN = AFollowing().WithFollowerId(CHARLIE.Id).WithFolloweeId(JOHN.Id).Build();
+
+            var dbContext = CreateInMemoryDbContext();
+
+            UserRepository userRepository = new UserRepository(dbContext);
+            userRepository.Add(CHARLIE);
+            userRepository.Add(ALICE);
+            userRepository.Add(JOHN);
+
+            var sut = new FollowingRepository(dbContext);
+            sut.Add(CHARLIE_FOLLOWING_ALICE);
+            sut.Add(CHARLIE_FOLLOWING_JOHN);
+            
+            var followees = sut.UsersFollowedBy(CHARLIE.Id);
+
+            followees.Should().BeEquivalentTo(new [] { ALICE, JOHN });
+        }
+
         private OpenChatDbContext CreateInMemoryDbContext()
         {
             DbContextOptionsBuilder<OpenChatDbContext> dbContextOptionsBuilder =

@@ -2,9 +2,11 @@ using Moq;
 using OpenChat.Application.Followings;
 using OpenChat.Domain.Entities;
 using static OpenChat.Test.Infrastructure.Builders.FollowingInputModelBuilder;
+using static OpenChat.Test.Infrastructure.Builders.UserBuilder;
 using Xunit;
 using System;
 using FluentAssertions;
+using System.Collections.Generic;
 
 namespace OpenChat.Application.UnitTests
 {
@@ -36,6 +38,23 @@ namespace OpenChat.Application.UnitTests
             Action action = () => sut.CreateFollowing(FOLLOWING);
 
             action.Should().Throw<FollowingAlreadyExistsException>().WithMessage("Following already exists");
+        }
+
+        [Fact]
+        public void Return_the_users_followed_by_a_user()
+        {
+            Guid CHARLIE_ID = Guid.NewGuid();
+            var ALICE = AUser().WithUsername("Alice").Build();
+            var JOHN = AUser().WithUsername("John").Build();
+            IEnumerable<User> FOLLOWEES = new List<User> { ALICE, JOHN };
+
+            Mock<IFollowingRepository> followingRepositoryStub = new Mock<IFollowingRepository>();
+            followingRepositoryStub.Setup(m => m.UsersFollowedBy(It.IsAny<Guid>())).Returns(FOLLOWEES);
+
+            var sut = new FollowingService(followingRepositoryStub.Object);
+            var followees = sut.UsersFollowedBy(CHARLIE_ID);
+
+            FOLLOWEES.Should().BeEquivalentTo(followees);
         }
     }
 }
