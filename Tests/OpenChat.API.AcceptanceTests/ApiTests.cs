@@ -35,5 +35,17 @@ namespace OpenChat.API.AcceptanceTests
 
             return registeredUser;
         }
+
+        protected async Task RegisterFollowing(RegisteredUser follower, RegisteredUser followee)
+        {
+            var following = new
+            {
+                followerId = follower.Id,
+                followeeId = followee.Id
+            };
+
+            var createFollowingResponse = await client.PostAsJsonAsync("api/followings", following);
+            createFollowingResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        }
     }
 }

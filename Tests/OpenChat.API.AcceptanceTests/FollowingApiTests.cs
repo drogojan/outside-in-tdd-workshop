@@ -52,17 +52,5 @@ namespace OpenChat.API.AcceptanceTests
             var followees = await followeesResponse.Content.ReadAsJsonAsync<IEnumerable<UserApiModel>>();
             followees.Should().BeEquivalentTo(new [] { marie, john });
         }
-
-        private async Task RegisterFollowing(RegisteredUser follower, RegisteredUser followee)
-        {
-            var following = new
-            {
-                followerId = follower.Id,
-                followeeId = followee.Id
-            };
-
-            var createFollowingResponse = await client.PostAsJsonAsync("api/followings", following);
-            createFollowingResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-        }
     }
 }
