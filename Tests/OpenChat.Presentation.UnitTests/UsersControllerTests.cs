@@ -84,5 +84,11 @@ namespace OpenChat.Presentation.UnitTests
 
             allUsers.Should().BeEquivalentTo(new List<UserApiModel> { CHARLIE, ALICE, BOB });
         }
+
+        [Fact]
+        public void Return_the_wall_posts()
+        {
+            
+        }
     }
 }

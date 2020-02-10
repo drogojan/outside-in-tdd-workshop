@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using FluentAssertions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using OpenChat.API.AcceptanceTests.Models;
 using Xunit;
 using Xunit.Abstractions;
@@ -46,6 +49,25 @@ namespace OpenChat.API.AcceptanceTests
 
             var createFollowingResponse = await client.PostAsJsonAsync("api/followings", following);
             createFollowingResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        }
+
+        protected async Task<CreatedPost> CreatePost(Post post, RegisteredUser forUser)
+        {
+            var createPostReponse = await client.PostAsJsonAsync($"api/users/{forUser.Id}/timeline", post);
+
+            createPostReponse.StatusCode.Should().Be(HttpStatusCode.Created);
+
+            var content = await createPostReponse.Content.ReadAsStringAsync();
+            CreatedPost createdPost = JsonConvert.DeserializeObject<CreatedPost>(content, new IsoDateTimeConverter
+            {
+                DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+            });
+            createdPost.PostId.Should().NotBeEmpty();
+            createdPost.UserId.Should().Be(forUser.Id);
+            createdPost.Text.Should().Be(post.Text);
+            createdPost.DateTime.Should().BeCloseTo(DateTime.UtcNow, 5000);
+
+            return createdPost;
         }
     }
 }

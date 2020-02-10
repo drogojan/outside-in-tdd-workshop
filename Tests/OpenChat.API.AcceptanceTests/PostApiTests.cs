@@ -5,55 +5,29 @@ using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
+using static OpenChat.API.AcceptanceTests.Builders.PostBuilder;
+using static OpenChat.API.AcceptanceTests.Builders.UserBuilder;
 using Xunit;
 using Xunit.Abstractions;
+using OpenChat.API.AcceptanceTests.Models;
 
 namespace OpenChat.API.AcceptanceTests
 {
-    public class PostApiTests : IClassFixture<AcceptanceTestFixture>
+    public class PostApiTests : ApiTests
     {
-        private readonly AcceptanceTestFixture testFixture;
-
-        private readonly HttpClient client;
-
         public PostApiTests(AcceptanceTestFixture testFixture, ITestOutputHelper testOutputHelper)
+            : base(testFixture, testOutputHelper)
         {
-            this.testFixture = testFixture;
-            this.testFixture.TestOutputHelper = testOutputHelper;
-            this.client = this.testFixture.CreateClient();
         }
 
         [Fact]
         public async Task Create_a_post()
         {
-            var user = new
-            {
-                username = "John",
-                password = "john123",
-                about = "I like to say hello"
-            };
+            User JOHN = AUser().WithUsername("john").WithPassword("john123").WithAbout("I like to say hello").Build();
+            var john = await RegisterUser(JOHN);
+            var post = APost().WithText("Hello World! This is John.").Build();
 
-            var registeredUserResponse = await client.PostAsJsonAsync("api/users", user);
-            registeredUserResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-
-            var registeredUser = await registeredUserResponse.Content.ReadAsJsonAsync<JObject>();
-            var userId = registeredUser.Value<string>("id");
-
-            var post = new
-            {
-                text = "Hello World! This is John."
-            };
-
-            var createPostReponse = await client.PostAsJsonAsync($"api/users/{userId}/timeline", post);
-
-            createPostReponse.StatusCode.Should().Be(HttpStatusCode.Created);
-
-            var createdPost = await createPostReponse.Content.ReadAsJsonAsync<JObject>();
-            Guid.Parse(createdPost.Value<string>("postId")).Should().NotBeEmpty();
-            createdPost.Value<string>("userId").Should().Be(userId);
-            createdPost.Value<string>("text").Should().Be(post.text);
-            // createdPost.Value<DateTime>("dateTime") should have specific format
-            // TODO - add CORS and other needed feature to the branch for the workshop
+            await CreatePost(post, john);
         }
 
         [Fact]
