@@ -28,5 +28,20 @@ namespace OpenChat.Persistence
                 .OrderByDescending(p => p.DateTime)
                 .ToList();
         }
+
+        public IEnumerable<Post> WallPostsFor(Guid userId)
+        {
+            var userIds = new List<Guid> { userId };
+
+            var foloweesId = dbContext.Followings
+                .Where(f => f.FollowerId == userId)
+                .Select(f => f.FolloweeId);
+
+            userIds.AddRange(foloweesId);
+
+            return dbContext.Posts
+                .Where(p => userIds.Contains(p.UserId))
+                .OrderByDescending(p => p.DateTime);
+        }
     }
 }

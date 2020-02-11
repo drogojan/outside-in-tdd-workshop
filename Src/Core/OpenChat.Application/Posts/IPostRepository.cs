@@ -8,5 +8,6 @@ namespace OpenChat.Application.Posts
     {
         void Add(Post post);
         IEnumerable<Post> PostsBy(Guid userId);
+        IEnumerable<Post> WallPostsFor(Guid userId);
     }
 }

@@ -42,12 +42,5 @@ namespace OpenChat.API.Controllers
         {
             return _userService.AllUsers();
         }
-
-        [HttpGet]
-        [Route("{userId}/wall")]
-        public IEnumerable<PostApiModel> GetWall(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

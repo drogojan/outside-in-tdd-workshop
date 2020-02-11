@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using OpenChat.Application.Followings;
 using OpenChat.Application.Posts;
 using OpenChat.Application.Users;
+using OpenChat.Application.Wall;
 using OpenChat.Common;
 using OpenChat.Infrastructure;
 using OpenChat.Persistence;
@@ -45,6 +46,7 @@ namespace OpenChat.API
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IFollowingService, FollowingService>();
             services.AddScoped<IFollowingRepository, FollowingRepository>();
+            services.AddScoped<IWallService, WallService>();
             services.AddDbContext<OpenChatDbContext>(options =>
             {
                 options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDB;Trusted_Connection=True;");
