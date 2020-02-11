@@ -1,13 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using FluentAssertions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using OpenChat.API.AcceptanceTests.Models;
+using OpenChat.Test.Infrastructure.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -53,19 +52,16 @@ namespace OpenChat.API.AcceptanceTests
 
         protected async Task<CreatedPost> CreatePost(Post post, RegisteredUser forUser)
         {
-            var createPostReponse = await client.PostAsJsonAsync($"api/users/{forUser.Id}/timeline", post);
+            var createPostResponse = await client.PostAsJsonAsync($"api/users/{forUser.Id}/timeline", post);
 
-            createPostReponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            createPostResponse.StatusCode.Should().Be(HttpStatusCode.Created);
 
-            var content = await createPostReponse.Content.ReadAsStringAsync();
-            CreatedPost createdPost = JsonConvert.DeserializeObject<CreatedPost>(content, new IsoDateTimeConverter
-            {
-                DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-            });
+            var content = await createPostResponse.Content.ReadAsStringAsync();
+            CreatedPost createdPost = JsonConvert.DeserializeObject<CreatedPost>(content);
             createdPost.PostId.Should().NotBeEmpty();
             createdPost.UserId.Should().Be(forUser.Id);
             createdPost.Text.Should().Be(post.Text);
-            // createdPost.DateTime.Should().BeCloseTo(DateTime.UtcNow, 5000);
+            createdPost.DateTime.ParseToFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'").Should().BeCloseTo(DateTime.UtcNow, 5000);
 
             return createdPost;
         }

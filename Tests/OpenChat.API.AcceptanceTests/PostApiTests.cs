@@ -1,15 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
-using static OpenChat.API.AcceptanceTests.Builders.PostBuilder;
-using static OpenChat.API.AcceptanceTests.Builders.UserBuilder;
+using OpenChat.API.AcceptanceTests.Models;
 using Xunit;
 using Xunit.Abstractions;
-using OpenChat.API.AcceptanceTests.Models;
+using static OpenChat.API.AcceptanceTests.Builders.PostBuilder;
+using static OpenChat.API.AcceptanceTests.Builders.UserBuilder;
 
 namespace OpenChat.API.AcceptanceTests
 {
@@ -23,7 +23,7 @@ namespace OpenChat.API.AcceptanceTests
         [Fact]
         public async Task Create_a_post()
         {
-            User JOHN = AUser().WithUsername("john").WithPassword("john123").WithAbout("I like to say hello").Build();
+            var JOHN = AUser().WithUsername("john").WithPassword("john123").WithAbout("I like to say hello").Build();
             var john = await RegisterUser(JOHN);
             var post = APost().WithText("Hello World! This is John.").Build();
 
@@ -40,48 +40,25 @@ namespace OpenChat.API.AcceptanceTests
                 about = "I like to say howdy"
             };
 
-            var registeredUserResponse = await client.PostAsJsonAsync("api/users", user);
-            registeredUserResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            var BOB = AUser().WithUsername("Bob").WithPassword("BOB123").WithAbout("I like to say howdy").Build();
+            var bob = await RegisterUser(BOB);
 
-            var registeredUser = await registeredUserResponse.Content.ReadAsJsonAsync<JObject>();
-            var userId = registeredUser.Value<string>("id");
+            var userId = bob.Id;
 
-            var firstPost = new
-            {
-                text = "Hello World! This is Bob."
-            };
+            var firstPost = APost().WithText("Hello World! This is Bob.").Build();
 
-            var secondPost = new
-            {
-                text = "Hey there! It's me again. Bob. B.O.B."
-            };
+            var secondPost = APost().WithText("Hey there! It's me again. Bob. B.O.B.").Build();
 
-            var createfirstPostReponse = await client.PostAsJsonAsync($"api/users/{userId}/timeline", firstPost);
-            createfirstPostReponse.StatusCode.Should().Be(HttpStatusCode.Created);
-
-            var firstCreatedPost = await createfirstPostReponse.Content.ReadAsJsonAsync<JObject>();
-            Guid.Parse(firstCreatedPost.Value<string>("postId")).Should().NotBeEmpty();
-            firstCreatedPost.Value<string>("userId").Should().Be(userId);
-            firstCreatedPost.Value<string>("text").Should().Be(firstPost.text);
-            // firstCreatedPost.Value<DateTime>("dateTime") should have specific format
-
-            var secondPostReponseResponse = await client.PostAsJsonAsync($"api/users/{userId}/timeline", secondPost);
-            secondPostReponseResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-
-            var secondCreatedPost = await secondPostReponseResponse.Content.ReadAsJsonAsync<JObject>();
-            Guid.Parse(secondCreatedPost.Value<string>("postId")).Should().NotBeEmpty();
-            secondCreatedPost.Value<string>("userId").Should().Be(userId);
-            secondCreatedPost.Value<string>("text").Should().Be(secondPost.text);
-            // secondCreatedPost.Value<DateTime>("dateTime") should have specific format
+            var firstPostCreated = await CreatePost(firstPost, bob);
+            var secondPostCreated = await CreatePost(secondPost, bob);
 
             var postsByUserResponse = await client.GetAsync($"api/users/{userId}/timeline");
             postsByUserResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-            var postsByUser = await postsByUserResponse.Content.ReadAsJsonAsync<JObject[]>();
-            postsByUser.Length.Should().Be(2);
+            var postsByUser = await postsByUserResponse.Content.ReadAsJsonAsync<IEnumerable<CreatedPost>>();
+            postsByUser.Should().HaveCount(2);
 
-            postsByUser[0].Value<string>("text").Should().Be(secondPost.text);
-            postsByUser[1].Value<string>("text").Should().Be(firstPost.text);
+            postsByUser.Should().ContainInOrder(secondPostCreated, firstPostCreated);
         }
     }
 }

@@ -15,7 +15,6 @@ namespace OpenChat.Persistence.UnitTests
     {
         public PostRepositoryTests(ITestOutputHelper testOutput) : base(testOutput)
         {
-            testOutput.WriteLine("cucu");
         }
 
         [Fact]

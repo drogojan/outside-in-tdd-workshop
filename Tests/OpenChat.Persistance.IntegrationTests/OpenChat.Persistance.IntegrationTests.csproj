@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\OpenChat.Persistence.UnitTests\FollowingRepositoryTests.cs" Link="FollowingRepositoryTests.cs" />
     <Compile Include="..\OpenChat.Persistence.UnitTests\PostRepositoryTests.cs" Link="PostRepositoryTests.cs" />
+    <Compile Include="..\OpenChat.Persistence.UnitTests\UserRepositoryTests.cs" Link="UserRepositoryTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
