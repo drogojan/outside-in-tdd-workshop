@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenChat.Persistence", "Src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenChat.Persistence.UnitTests", "Tests\OpenChat.Persistence.UnitTests\OpenChat.Persistence.UnitTests.csproj", "{51074CED-6E55-4A1A-8592-27640220204F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenChat.Persistance.IntegrationTests", "Tests\OpenChat.Persistance.IntegrationTests\OpenChat.Persistance.IntegrationTests.csproj", "{880E1F9F-2060-4662-9A7F-727BF2ADE33F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,18 @@ Global
 		{51074CED-6E55-4A1A-8592-27640220204F}.Release|x64.Build.0 = Release|Any CPU
 		{51074CED-6E55-4A1A-8592-27640220204F}.Release|x86.ActiveCfg = Release|Any CPU
 		{51074CED-6E55-4A1A-8592-27640220204F}.Release|x86.Build.0 = Release|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Debug|x64.Build.0 = Debug|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Debug|x86.Build.0 = Debug|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Release|x64.ActiveCfg = Release|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Release|x64.Build.0 = Release|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Release|x86.ActiveCfg = Release|Any CPU
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +195,7 @@ Global
 		{5E136316-8F0E-4DFA-95D8-B8B6E45775E3} = {CD4645C8-BD5D-423A-B5AF-94439D8C42EB}
 		{A89FAEAD-2CCE-45C7-BD7A-E547DFEE7D2E} = {29D45A83-F10A-4D2B-8B4F-AA2658798B71}
 		{51074CED-6E55-4A1A-8592-27640220204F} = {CD4645C8-BD5D-423A-B5AF-94439D8C42EB}
+		{880E1F9F-2060-4662-9A7F-727BF2ADE33F} = {CD4645C8-BD5D-423A-B5AF-94439D8C42EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A57206E1-1304-47B4-BD9A-F56A644997C1}

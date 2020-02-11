@@ -1,8 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="EfCore.TestSupport" Version="3.1.0" />
+    <PackageReference Include="MartinCostello.Logging.XUnit" Version="0.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Src\Core\OpenChat.Domain\OpenChat.Domain.csproj" />
     <ProjectReference Include="..\..\Src\Core\OpenChat.Application\OpenChat.Application.csproj" />
+    <ProjectReference Include="..\..\Src\Infrastructure\OpenChat.Persistence\OpenChat.Persistence.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
