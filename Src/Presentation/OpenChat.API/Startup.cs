@@ -26,6 +26,7 @@ namespace OpenChat.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +38,8 @@ namespace OpenChat.API
             }
 
             app.UseRouting();
+
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyOrigin().WithMethods("GET", "POST"));
 
             app.UseAuthorization();
 

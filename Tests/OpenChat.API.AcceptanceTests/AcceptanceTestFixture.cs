@@ -34,13 +34,7 @@ namespace OpenChat.API.AcceptanceTests
 
             builder.ConfigureServices(services =>
             {
-                var buildServiceProvider = services.BuildServiceProvider();
 
-                using (var scope = buildServiceProvider.CreateScope())
-                {
-                    // var scopeServiceProvider = scope.ServiceProvider;
-                    // var myService = scopeServiceProvider.GetRequiredService<MyService>();
-                }
             });
         }
     }
