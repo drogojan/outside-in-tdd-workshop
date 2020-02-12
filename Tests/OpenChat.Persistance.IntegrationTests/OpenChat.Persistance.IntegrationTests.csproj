@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EfCore.TestSupport" Version="3.1.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <!-- <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" /> -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -16,21 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\OpenChat.Persistence.UnitTests\FollowingRepositoryTests.cs" Link="FollowingRepositoryTests.cs" />
-    <Compile Include="..\OpenChat.Persistence.UnitTests\PostRepositoryTests.cs" Link="PostRepositoryTests.cs" />
-    <Compile Include="..\OpenChat.Persistence.UnitTests\UserRepositoryTests.cs" Link="UserRepositoryTests.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Src\Infrastructure\OpenChat.Persistence\OpenChat.Persistence.csproj" />
     <ProjectReference Include="..\..\Src\Core\OpenChat.Domain\OpenChat.Domain.csproj" />
     <ProjectReference Include="..\OpenChat.Test.Infrastructure\OpenChat.Test.Infrastructure.csproj" />
   </ItemGroup>
-
-  <!-- <ItemGroup>
-    <Content Include="appConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup> -->
 
 </Project>
