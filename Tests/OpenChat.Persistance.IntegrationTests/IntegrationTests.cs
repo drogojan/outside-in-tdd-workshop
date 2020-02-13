@@ -43,14 +43,5 @@ namespace OpenChat.Persistance.IntegrationTests
 
             return dbContextInstance;
         }
-
-        [RunnableInDebugOnly(Skip="SkipedOnDebug")]
-        public void DeleteAllTestDatabasesOk()
-        {
-            var numDeleted = DatabaseTidyHelper
-                .DeleteAllUnitTestDatabases();
-            testOutputHelper.WriteLine(
-                "This deleted {0} databases.", numDeleted);
-        }
     }
 }

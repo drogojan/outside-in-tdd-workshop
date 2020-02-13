@@ -76,17 +76,17 @@ namespace OpenChat.API.AcceptanceTests
                 // var config = AppSettings.GetConfiguration();
                 // var orgDbName = new SqlConnectionStringBuilder(config.GetConnectionString(AppSettings.UnitTestConnectionStringName)).InitialCatalog;
 
-                var uniqueDbConnectionString = this.GetUniqueDatabaseConnectionString();
+                // var uniqueDbConnectionString = this.GetUniqueDatabaseConnectionString();
 
                 // Add DB for acceptance tests
                 services.AddDbContext<OpenChatDbContext>(options =>
                 {
-                    // options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
-                    options.UseSqlServer(uniqueDbConnectionString);
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDBTest;Trusted_Connection=True;");
+                    // options.UseSqlServer(uniqueDbConnectionString);
                     options.UseInternalServiceProvider(sqlServerServiceProvider);
                 });
 
-                services.AddDbContext<OpenChatDbContext>();
+                // services.AddDbContext<OpenChatDbContext>();
 
                 // Build the service provider.
                 var sp = services.BuildServiceProvider();

@@ -15,7 +15,7 @@ namespace OpenChat.Persistance.IntegrationTests
     {
         public FollowingRepositoryTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-        }
+        }   
 
         [Fact]
         public void Inform_when_a_following_is_already_registered()
@@ -26,11 +26,11 @@ namespace OpenChat.Persistance.IntegrationTests
 
             var dbContext = DbContext;
 
-            UserRepository userRepository = new UserRepository(dbContext);
+            UserRepository userRepository = new UserRepository(DbContext);
             userRepository.Add(CHARLIE);
             userRepository.Add(ALICE);
 
-            var sut = new FollowingRepository(dbContext);
+            var sut = new FollowingRepository(DbContext);
 
             sut.IsFollowingRegistered(CHARLIE_FOLLOWING_ALICE).Should().BeFalse();
 
@@ -50,12 +50,12 @@ namespace OpenChat.Persistance.IntegrationTests
 
             var dbContext = DbContext;
 
-            UserRepository userRepository = new UserRepository(dbContext);
+            UserRepository userRepository = new UserRepository(DbContext);
             userRepository.Add(CHARLIE);
             userRepository.Add(ALICE);
             userRepository.Add(JOHN);
 
-            var sut = new FollowingRepository(dbContext);
+            var sut = new FollowingRepository(DbContext);
             sut.Add(CHARLIE_FOLLOWING_ALICE);
             sut.Add(CHARLIE_FOLLOWING_JOHN);
 
