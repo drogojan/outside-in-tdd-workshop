@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenChat.Persistence;
+using OpenChat.Test.Infrastructure.Extensions;
 using TestSupport.EfHelpers;
 using TestSupport.Helpers;
 using Xunit.Abstractions;
@@ -76,17 +77,15 @@ namespace OpenChat.API.AcceptanceTests
                 // var config = AppSettings.GetConfiguration();
                 // var orgDbName = new SqlConnectionStringBuilder(config.GetConnectionString(AppSettings.UnitTestConnectionStringName)).InitialCatalog;
 
-                var uniqueDbConnectionString = this.GetUniqueDatabaseConnectionString();
+                // var uniqueDbConnectionString = this.GetUniqueDatabaseConnectionString();
 
                 // Add DB for acceptance tests
                 services.AddDbContext<OpenChatDbContext>(options =>
                 {
-                    // options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatTestDB;Trusted_Connection=True;");
-                    options.UseSqlServer(uniqueDbConnectionString);
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDBTest_AcceptanceTests;Trusted_Connection=True;");
+                    // options.UseSqlServer(uniqueDbConnectionString);
                     options.UseInternalServiceProvider(sqlServerServiceProvider);
                 });
-
-                services.AddDbContext<OpenChatDbContext>();
 
                 // Build the service provider.
                 var sp = services.BuildServiceProvider();
@@ -96,12 +95,13 @@ namespace OpenChat.API.AcceptanceTests
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<OpenChatDbContext>();
+                    var dbContext = scopedServices.GetRequiredService<OpenChatDbContext>();
 
-                    db.CreateEmptyViaWipe();
+                    // dbContext.CreateEmptyViaWipe();
                     // Ensure the database is created.
-                    // db.Database.EnsureDeleted();
-                    // db.Database.Migrate();
+                    // dbContext.Database.EnsureDeleted();
+                    dbContext.Database.Migrate();
+                    dbContext.WipeTables();
                 }
             });
         }

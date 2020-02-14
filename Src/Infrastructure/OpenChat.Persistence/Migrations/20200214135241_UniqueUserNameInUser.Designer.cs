@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenChat.Persistence;
 
 namespace OpenChat.Persistence.Migrations
 {
     [DbContext(typeof(OpenChatDbContext))]
-    partial class OpenChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200214135241_UniqueUserNameInUser")]
+    partial class UniqueUserNameInUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
