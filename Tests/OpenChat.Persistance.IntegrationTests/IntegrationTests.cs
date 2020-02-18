@@ -11,16 +11,17 @@ using Xunit.Abstractions;
 
 namespace OpenChat.Persistance.IntegrationTests
 {
-    public class IntegrationTests
+    public class IntegrationTests : IClassFixture<DbMigrationFixture>
     {
         //protected OpenChatDbContext DbContext { get; private set; }
 
         //private readonly ILoggerFactory _loggerFactory;
-        private readonly ITestOutputHelper testOutputHelper;
+        // private readonly ITestOutputHelper testOutputHelper;
 
         DbContextOptions<OpenChatDbContext> dbContextOptions;
+        // private ITestOutputHelper testOutput;
 
-        public IntegrationTests(ITestOutputHelper testOutputHelper)
+        public IntegrationTests(DbMigrationFixture dbMigrationFixture, ITestOutputHelper testOutputHelper)
         {
             //_loggerFactory = LoggerFactory.Create(builder =>
             //{
@@ -29,11 +30,12 @@ namespace OpenChat.Persistance.IntegrationTests
             //    builder.AddXUnit(testOutputHelper);
             //});
 
-            this.testOutputHelper = testOutputHelper;
+            // this.testOutputHelper = testOutputHelper;
             dbContextOptions = this.CreateUniqueClassOptionsWithLogging<OpenChatDbContext>(log => testOutputHelper.WriteLine(log.Message));
             var dbContext = new OpenChatDbContext(dbContextOptions);
             // dbContext.CreateEmptyViaWipe();
-            dbContext.Database.Migrate();
+            dbMigrationFixture.Migrate(dbContext);
+            // dbContext.Database.Migrate();
             dbContext.WipeTables();
         }
 

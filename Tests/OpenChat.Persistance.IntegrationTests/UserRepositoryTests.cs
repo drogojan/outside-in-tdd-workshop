@@ -18,7 +18,7 @@ namespace OpenChat.Persistance.IntegrationTests
         User ALICE = new User { Id = ALICE_ID, Username = "Alice", Password = "Alis", About = "About Alice" };
         User CHARLIE = new User { Id = CHARLIE_ID, Username = "Charlie", Password = "Charli", About = "About Charlie" };
 
-        public UserRepositoryTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public UserRepositoryTests(DbMigrationFixture dbMigrationFixture, ITestOutputHelper testOutputHelper) : base(dbMigrationFixture, testOutputHelper)
         {
         }
 

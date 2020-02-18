@@ -13,7 +13,7 @@ namespace OpenChat.Persistance.IntegrationTests
 {
     public class FollowingRepositoryTests : IntegrationTests
     {
-        public FollowingRepositoryTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public FollowingRepositoryTests(DbMigrationFixture dbMigrationFixture, ITestOutputHelper testOutputHelper) : base(dbMigrationFixture, testOutputHelper)
         {
         }
 
