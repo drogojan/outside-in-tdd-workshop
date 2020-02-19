@@ -9,7 +9,7 @@ using TestSupport.EfHelpers;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace OpenChat.Persistance.IntegrationTests
+namespace OpenChat.Persistence.IntegrationTests
 {
     public class IntegrationTests : IClassFixture<DbMigrationFixture>
     {

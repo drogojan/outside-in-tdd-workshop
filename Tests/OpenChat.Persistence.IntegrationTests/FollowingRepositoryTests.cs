@@ -9,7 +9,7 @@ using TestSupport.EfHelpers;
 using Xunit.Abstractions;
 using OpenChat.Persistence;
 
-namespace OpenChat.Persistance.IntegrationTests
+namespace OpenChat.Persistence.IntegrationTests
 {
     public class FollowingRepositoryTests : IntegrationTests
     {

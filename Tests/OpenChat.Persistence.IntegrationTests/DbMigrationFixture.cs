@@ -3,7 +3,7 @@ using OpenChat.Persistence;
 using OpenChat.Test.Infrastructure.Extensions;
 using Xunit.Abstractions;
 
-namespace OpenChat.Persistance.IntegrationTests
+namespace OpenChat.Persistence.IntegrationTests
 {
     public class DbMigrationFixture
     {

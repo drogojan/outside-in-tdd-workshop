@@ -8,7 +8,7 @@ using static OpenChat.Test.Infrastructure.Builders.UserBuilder;
 using System.Collections.Generic;
 using Xunit.Abstractions;
 
-namespace OpenChat.Persistance.IntegrationTests
+namespace OpenChat.Persistence.IntegrationTests
 {
     public class UserRepositoryTests : IntegrationTests
     {
