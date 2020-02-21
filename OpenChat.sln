@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenChat.Application.UnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenChat.API.UnitTests", "Tests\OpenChat.API.UnitTests\OpenChat.API.UnitTests.csproj", "{C7048485-612F-4F69-B856-82B5F9414176}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenChat.Persistence.IntegrationTests", "Tests\OpenChat.Persistence.IntegrationTests\OpenChat.Persistence.IntegrationTests.csproj", "{F8A34C03-DF90-4381-A28C-558BD43DEDAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +151,18 @@ Global
 		{C7048485-612F-4F69-B856-82B5F9414176}.Release|x64.Build.0 = Release|Any CPU
 		{C7048485-612F-4F69-B856-82B5F9414176}.Release|x86.ActiveCfg = Release|Any CPU
 		{C7048485-612F-4F69-B856-82B5F9414176}.Release|x86.Build.0 = Release|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Debug|x64.Build.0 = Debug|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Debug|x86.Build.0 = Debug|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Release|x64.ActiveCfg = Release|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Release|x64.Build.0 = Release|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Release|x86.ActiveCfg = Release|Any CPU
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +180,7 @@ Global
 		{A89FAEAD-2CCE-45C7-BD7A-E547DFEE7D2E} = {29D45A83-F10A-4D2B-8B4F-AA2658798B71}
 		{F65F7CAC-7FC2-4C9E-B11B-731BF10DF787} = {CD4645C8-BD5D-423A-B5AF-94439D8C42EB}
 		{C7048485-612F-4F69-B856-82B5F9414176} = {CD4645C8-BD5D-423A-B5AF-94439D8C42EB}
+		{F8A34C03-DF90-4381-A28C-558BD43DEDAF} = {CD4645C8-BD5D-423A-B5AF-94439D8C42EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B7D0837-EAA1-4E22-A091-6CB1728B57A2}
