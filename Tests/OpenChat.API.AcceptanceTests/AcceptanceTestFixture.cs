@@ -57,7 +57,7 @@ namespace OpenChat.API.AcceptanceTests
                 // Add DB for acceptance tests
                 services.AddDbContext<OpenChatDbContext>(options =>
                 {
-                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDBTest_AcceptanceTests;Trusted_Connection=True;");
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDBRehearsal_AcceptanceTests;Trusted_Connection=True;");
                     options.UseInternalServiceProvider(sqlServerServiceProvider);
                 });
                 

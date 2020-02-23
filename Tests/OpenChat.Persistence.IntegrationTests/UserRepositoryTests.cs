@@ -3,25 +3,30 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using OpenChat.Domain;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace OpenChat.Persistence.IntegrationTests
 {
-    public class UserRepositoryTests
+    public class UserRepositoryTests : RepositoryIntegrationTests
     {
+        public UserRepositoryTests(DbMigrationFixture dbMigrationFixture, ITestOutputHelper testOutputHelper) : base(dbMigrationFixture, testOutputHelper)
+        {
+        }
+
         [Fact]
         public void Inform_when_a_username_is_already_taken()
         {
-            DbContextOptionsBuilder<OpenChatDbContext> dbContextOptionsBuilder =
-                new DbContextOptionsBuilder<OpenChatDbContext>();
-            dbContextOptionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=OpenChatDBRehearsal;Trusted_Connection=True");
-            dbContextOptionsBuilder.EnableSensitiveDataLogging();
+            // DbContextOptionsBuilder<OpenChatDbContext> dbContextOptionsBuilder =
+            //     new DbContextOptionsBuilder<OpenChatDbContext>();
+            // dbContextOptionsBuilder.UseSqlServer(
+            //     @"Server=(localdb)\mssqllocaldb;Database=OpenChatDBRehearsal;Trusted_Connection=True");
+            // dbContextOptionsBuilder.EnableSensitiveDataLogging();
 
-            var dbContextOptions = dbContextOptionsBuilder.Options;
-            var dbContext = new OpenChatDbContext(dbContextOptions);
-            dbContext.Database.Migrate();
+            // var dbContextOptions = dbContextOptionsBuilder.Options;
+            // var dbContext = new OpenChatDbContext(dbContextOptions);
+            // dbContext.Database.Migrate();
 
-            var sut = new UserRepository(dbContext);
+            var sut = new UserRepository(DbContext);
 
             var john = new User { Id = Guid.NewGuid(), Username = "JOHN", Password = "john", About = "About John"};
             var marie = new User { Id = Guid.NewGuid(), Username = "MARIE", Password = "marie", About = "About Marie"};
