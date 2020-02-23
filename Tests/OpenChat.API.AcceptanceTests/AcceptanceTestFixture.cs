@@ -1,10 +1,14 @@
 ﻿using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenChat.Persistence;
+using OpenChat.Test.Infrastructure.Extensions;
 using Xunit.Abstractions;
 
 namespace OpenChat.API.AcceptanceTests
@@ -34,7 +38,45 @@ namespace OpenChat.API.AcceptanceTests
 
             builder.ConfigureServices(services =>
             {
-
+                // Remove the app's OpenChatDbContext registration.
+                var descriptor = services.SingleOrDefault(
+                    d => d.ServiceType ==
+                         typeof(DbContextOptions<OpenChatDbContext>));
+                
+                if (descriptor != null)
+                {
+                    services.Remove(descriptor);
+                }
+                
+                // Create a new service provider.
+                var sqlServerServiceProvider =
+                    new ServiceCollection()
+                        .AddEntityFrameworkSqlServer()
+                        .BuildServiceProvider();
+                
+                // Add DB for acceptance tests
+                services.AddDbContext<OpenChatDbContext>(options =>
+                {
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=OpenChatDBTest_AcceptanceTests;Trusted_Connection=True;");
+                    options.UseInternalServiceProvider(sqlServerServiceProvider);
+                });
+                
+                // Build the service provider.
+                var sp = services.BuildServiceProvider();
+                
+                // Create a scope to obtain a reference to the database
+                // context (OpenChatDbContext).
+                using (var scope = sp.CreateScope())
+                {
+                    var scopedServices = scope.ServiceProvider;
+                    var dbContext = scopedServices.GetRequiredService<OpenChatDbContext>();
+                
+                    // dbContext.CreateEmptyViaWipe();
+                    // Ensure the database is created.
+                    // dbContext.Database.EnsureDeleted();
+                    dbContext.Database.Migrate();
+                    dbContext.WipeTables();
+                }
             });
         }
     }
